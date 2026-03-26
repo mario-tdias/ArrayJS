@@ -18,33 +18,51 @@ let indisponiveis = [];
 
 let totalLivroEmprestados = 0;
 
+let nomeLivroMaisEmprestado = "";
+let quantidadeLivroMaisEmprestado = 0;
 
-for(let i = 0; i < livros.length; i++){
-    for(let j = 0; j < emprestimos.length; j++){
-        if(livros[i].titulo == emprestimos[j].titulo){
-          
-            if (livros[i].copias >= emprestimos[j].quantidade){
+for (let i = 0; i < livros.length; i++) {
+    let emprestadoEsseLivro = 0; // controla apenas esse livro
+
+    for (let j = 0; j < emprestimos.length; j++) {
+        
+        if (livros[i].titulo === emprestimos[j].titulo) {
+
+            if (livros[i].copias >= emprestimos[j].quantidade) {
+
                 livros[i].copias -= emprestimos[j].quantidade;
                 totalLivroEmprestados += emprestimos[j].quantidade;
+
+                emprestadoEsseLivro += emprestimos[j].quantidade;
+
                 console.log("Empréstimo realizado: " + livros[i].titulo);
+
             } else {
                 console.log("Não há cópias suficientes de " + livros[i].titulo);
             }
-        } 
-        if(emprestimos[j].quantidade > 0){
-            emprestados.push(livros[i].titulo);
-        } if(livros[i].copias == 0){
-            indisponiveis.push(livros[i].titulo);
         }
-        
+    }
 
+    // Se o livro teve algum empréstimo, adiciona à lista
+    if (emprestadoEsseLivro > 0) {
+        emprestados.push(livros[i].titulo);
+    }
+
+    // Atualiza o livro mais emprestado
+    if (emprestadoEsseLivro > quantidadeLivroMaisEmprestado) {
+        quantidadeLivroMaisEmprestado = emprestadoEsseLivro;
+        nomeLivroMaisEmprestado = livros[i].titulo;
+    }
+
+    // Se o estoque zerou, adiciona aos indisponíveis
+    if (livros[i].copias === 0) {
+        indisponiveis.push(livros[i].titulo);
     }
 }
 
-for(let i = 0; i < livros.length; i++){
-
-}
-console.log(emprestados);
-console.log(indisponiveis);
+// 🔻 SAÍDA 🔻
+console.log("Livros emprestados:", emprestados);
+console.log("Livros indisponíveis:", indisponiveis);
 console.log(livros);
-console.log("Livros emprestados: "+totalLivroEmprestados);
+console.log("Total de livros emprestados:", totalLivroEmprestados);
+console.log("Livro mais emprestado:", nomeLivroMaisEmprestado);
