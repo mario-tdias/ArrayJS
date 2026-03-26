@@ -21,6 +21,9 @@ let totalLivroEmprestados = 0;
 let nomeLivroMaisEmprestado = "";
 let quantidadeLivroMaisEmprestado = 0;
 
+let nomeLivroMenosEmprestado = "";
+let quantidadeLivroMenosEmprestado = Infinity;
+
 for (let i = 0; i < livros.length; i++) {
     let emprestadoEsseLivro = 0; // controla apenas esse livro
 
@@ -53,6 +56,11 @@ for (let i = 0; i < livros.length; i++) {
         quantidadeLivroMaisEmprestado = emprestadoEsseLivro;
         nomeLivroMaisEmprestado = livros[i].titulo;
     }
+    // Atualiza o livro menos emprestado
+    if (emprestadoEsseLivro < quantidadeLivroMenosEmprestado){
+        quantidadeLivroMenosEmprestado = emprestadoEsseLivro;
+        nomeLivroMenosEmprestado = livros[i].titulo;
+    }
 
     // Se o estoque zerou, adiciona aos indisponíveis
     if (livros[i].copias === 0) {
@@ -60,9 +68,9 @@ for (let i = 0; i < livros.length; i++) {
     }
 }
 
-// 🔻 SAÍDA 🔻
 console.log("Livros emprestados:", emprestados);
 console.log("Livros indisponíveis:", indisponiveis);
 console.log(livros);
 console.log("Total de livros emprestados:", totalLivroEmprestados);
 console.log("Livro mais emprestado:", nomeLivroMaisEmprestado);
+console.log("Livro menos emprestado: "+nomeLivroMenosEmprestado);
